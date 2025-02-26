@@ -2,15 +2,12 @@ import Array "mo:base/Array";
 import Buffer "mo:base/Buffer";
 import Blob "mo:base/Blob";
 import HashMap "mo:base/HashMap";
-import Hash "mo:base/Hash";
 import Iter "mo:base/Iter";
 import Nat "mo:base/Nat";
 import Nat32 "mo:base/Nat32";
-import Principal "mo:base/Principal";
 import Result "mo:base/Result";
 import Text "mo:base/Text";
 import Time "mo:base/Time";
-import Order "mo:base/Order";
 
 actor {
   // Type definitions
@@ -131,8 +128,8 @@ actor {
     switch (userEmailMap.get(email)) {
       case (?userId) {
         switch (users.get(userId)) {
-          case (?user) {
-            if (user.passwordHash == hashPassword(password)) {
+          case (?userAccount) {
+            if (userAccount.passwordHash == hashPassword(password)) {
               return #ok({id = userId});
             } else {
               return #err(#NotAuthorized);
@@ -147,8 +144,8 @@ actor {
   
   public func deleteUser(userId : UserId, password : Text) : async Result.Result<Bool, Error> {
     switch (users.get(userId)) {
-      case (?user) {
-        if (user.passwordHash == hashPassword(password)) {
+      case (?userAccount) {
+        if (userAccount.passwordHash == hashPassword(password)) {
           // Delete all user's photos
           switch (userPhotos.get(userId)) {
             case (?photoIds) {
@@ -160,7 +157,7 @@ actor {
           };
           
           // Remove user data
-          userEmailMap.delete(user.email);
+          userEmailMap.delete(userAccount.email);
           userPhotos.delete(userId);
           users.delete(userId);
           
@@ -185,7 +182,7 @@ actor {
     };
     
     switch (users.get(userId)) {
-      case (?user) {
+      case (?_) {
         let photoId = nextPhotoId;
         nextPhotoId += 1;
         
