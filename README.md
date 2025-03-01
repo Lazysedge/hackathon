@@ -13,18 +13,147 @@ This application consists of three main components:
 ## Project Structure
 
 ```
-pom-photo-app/
-├── src/                    # Frontend React code
-│   ├── components/         # Reusable React components
-│   ├── pages/              # Page components
-│   ├── context/            # React context for state management
-│   └── declarations/       # Auto-generated canister interfaces
-├── backend/                # Motoko backend code
-├── eth-integration/        # Rust Ethereum integration
-│   └── src/
-│       └── main.rs         # Rust Ethereum service
-├── public/                 # Static assets
-└── dfx.json                # Internet Computer configuration
+/hackathon-project
+├── README.md
+├── package.json
+├── dfx.json                        # Internet Computer configuration
+├── webpack.config.js               # Frontend build configuration
+├── postcss.config.js               # PostCSS configuration for Tailwind
+├── tailwind.config.js              # Tailwind CSS configuration
+├── .gitignore
+│
+├── /src                            # Frontend source code
+│   ├── /frontend                   # React application
+│   │   ├── index.jsx               # Entry point
+│   │   ├── App.jsx                 # Main application component with routing
+│   │   ├── routes.js               # Route definitions
+│   │   │
+│   │   ├── /components
+│   │   │   ├── /common
+│   │   │   │   ├── Button.jsx      # Reusable button component
+│   │   │   │   ├── ImageCard.jsx   # Photo card with like/info buttons
+│   │   │   │   ├── Modal.jsx       # For pop-ups
+│   │   │   │   ├── Navbar.jsx      # Top navigation with POM logo, Private button and Login
+│   │   │   │   └── ...
+│   │   │   │
+│   │   │   ├── /auth
+│   │   │   │   ├── LoginForm.jsx   # Email/password login form
+│   │   │   │   ├── RegisterForm.jsx # Registration form with password confirmation
+│   │   │   │   └── AuthModal.jsx   # "Sign in or register first" modal
+│   │   │   │
+│   │   │   ├── /gallery
+│   │   │   │   ├── ImageGrid.jsx   # Grid of images for landing/private pages
+│   │   │   │   ├── ImageUpload.jsx # For add pic functionality
+│   │   │   │   └── ...
+│   │   │   │
+│   │   │   └── /modals
+│   │   │       ├── DonoModal.jsx   # Donation/price setting modal
+│   │   │       ├── AuthPromptModal.jsx # Pop-up for unauthenticated users
+│   │   │       ├── SaveMemoryModal.jsx # Modal for saving an image
+│   │   │       └── ...
+│   │   │
+│   │   ├── /contexts
+│   │   │   ├── AuthContext.jsx     # Handle authentication state
+│   │   │   ├── GalleryContext.jsx  # Manage images and collections
+│   │   │   ├── BlockchainContext.jsx # Ethereum wallet connection and transactions
+│   │   │   └── ...
+│   │   │
+│   │   ├── /hooks
+│   │   │   ├── useAuth.js          # Custom hook for auth functionality
+│   │   │   ├── useGallery.js       # Hook for image management
+│   │   │   ├── useWallet.js        # Hook for Ethereum wallet interactions
+│   │   │   ├── useSmartContract.js # Hook for interacting with smart contracts
+│   │   │   └── ...
+│   │   │
+│   │   ├── /pages
+│   │   │   ├── LandingPage.jsx     # Main gallery page
+│   │   │   ├── LoginPage.jsx       # User login with mountain background
+│   │   │   ├── RegisterPage.jsx    # User registration with mountain background
+│   │   │   ├── PrivateGallery.jsx  # User's private collection
+│   │   │   ├── AddPicture.jsx      # Upload new pictures
+│   │   │   ├── DonoPage.jsx        # Donation/pricing page
+│   │   │   ├── NFTGallery.jsx      # Display owned and purchasable NFTs
+│   │   │   ├── WalletPage.jsx      # Wallet connection and management
+│   │   │   └── ...
+│   │   │
+│   │   ├── /services
+│   │   │   ├── auth.service.js     # Authentication API calls
+│   │   │   ├── images.service.js   # Image upload/fetch functionality
+│   │   │   ├── agent.js            # Internet Computer agent for Motoko backend calls
+│   │   │   ├── blockchain.service.js # Ethereum blockchain interactions
+│   │   │   └── ...
+│   │   │
+│   │   ├── /utils
+│   │   │   ├── imageHelpers.js     # Image processing utilities
+│   │   │   ├── validators.js       # Form validation
+│   │   │   ├── web3Utils.js        # Ethereum utility functions
+│   │   │   └── ...
+│   │   │
+│   │   ├── /contracts              # Frontend contract interfaces
+│   │   │   ├── NFTContract.js      # NFT contract ABI and functions
+│   │   │   ├── MarketplaceContract.js # Marketplace contract interface
+│   │   │   └── ...
+│   │   │
+│   │   └── /styles
+│   │       ├── index.css           # Global styles and Tailwind imports
+│   │       ├── tailwind.css        # Tailwind base file with @tailwind directives
+│   │       ├── components.css      # Additional custom styles beyond Tailwind
+│   │       └── /theme              # Custom theme extensions for Tailwind
+│   │           ├── colors.js       # Custom color palette
+│   │           ├── buttons.js      # Button variants
+│   │           └── ...
+│   │
+│   └── /backend                    # Motoko backend canisters
+│       ├── /main                   # Main canister for app logic
+│       │   ├── Types.mo            # Type definitions
+│       │   ├── Auth.mo             # Authentication and user management
+│       │   ├── Gallery.mo          # Photo gallery management
+│       │   ├── Storage.mo          # Image and file storage
+│       │   ├── Payments.mo         # Payment processing logic
+│       │   └── Main.mo             # Main entry point canister
+│       │
+│       ├── /ethereum_bridge        # Canister for Ethereum integration
+│       │   ├── Bridge.mo           # Bridge between IC and Ethereum
+│       │   ├── EthTypes.mo         # Ethereum data types
+│       │   └── TransactionVerifier.mo # Verify Ethereum transactions
+│       │
+│       └── /nft                    # NFT-related canisters
+│           ├── NFT.mo              # NFT implementation
+│           ├── Marketplace.mo      # NFT marketplace logic
+│           └── ...
+│
+├── /assets                         # Static assets
+│   ├── /images
+│   │   ├── logo.svg
+│   │   ├── mountain-lake.jpg
+│   │   ├── forest-trees.jpg  
+│   │   └── ...
+│   └── /icons
+│       └── ...
+│
+├── /ethereum                       # Ethereum smart contracts
+│   ├── /contracts
+│   │   ├── POMToken.sol            # ERC-20 token for the platform
+│   │   ├── POMNFT.sol              # ERC-721 NFT contract
+│   │   ├── Marketplace.sol         # NFT marketplace contract
+│   │   └── ...
+│   │
+│   ├── /migrations                 # Truffle migration scripts
+│   │   └── ...
+│   │
+│   ├── /test                       # Smart contract tests
+│   │   └── ...
+│   │
+│   ├── truffle-config.js           # Truffle configuration
+│   └── hardhat.config.js           # Hardhat configuration (alternative)
+│
+├── /declarations                   # Auto-generated type declarations
+│   └── ...
+│
+└── /scripts                        # Deployment and utility scripts
+    ├── deploy.sh                   # Deploy to Internet Computer
+    ├── setup_ethereum.sh           # Deploy Ethereum contracts
+    └── ...
 ```
 
 ## Prerequisites
