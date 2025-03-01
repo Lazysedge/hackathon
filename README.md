@@ -1,15 +1,3 @@
-# POM Photo Sharing App
-
-A photo sharing application with Ethereum donation integration built with React, Motoko, and Rust.
-
-## Architecture Overview
-
-This application consists of three main components:
-
-1. **Frontend**: React application with Tailwind CSS for styling
-2. **Backend**: Motoko canister running on the Internet Computer
-3. **Ethereum Integration**: Rust service for handling crypto donations
-
 ## Project Structure
 
 ```
@@ -156,122 +144,124 @@ This application consists of three main components:
     └── ...
 ```
 
-## Prerequisites
+# POM - Photo Sharing Platform
 
-- [Node.js](https://nodejs.org/) (v16 or later)
-- [DFX](https://smartcontracts.org/) (Internet Computer SDK)
-- [Rust](https://www.rust-lang.org/tools/install)
-- [Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+POM is a decentralized photo sharing platform built on Internet Computer and Ethereum, allowing users to share images, create private collections, and monetize their content through NFTs.
 
-## Setup and Installation
+![POM Platform](./assets/images/logo.svg)
 
-### 1. Clone the repository
+## Overview
 
+POM enables users to:
+- Browse a public gallery of nature photos
+- Create private collections for personal memories
+- Monetize photos by setting prices and accepting donations
+- Convert photos to NFTs for trading on the marketplace
+- Connect Ethereum wallets for blockchain functionality
+
+## Application Flow
+
+### Landing Page
+The landing page displays a grid of public photos. From here, users can:
+- Browse the public photo gallery
+- Click on individual photos to view details
+- Access the login page via the login button in the top right
+- Access their private gallery via the "Private" button in the top left (requires authentication)
+- Access the donation/pricing page via the bag icon in the top navigation
+
+### Authentication
+
+#### Login Page
+- Access by clicking the "Login" button in the top right of the landing page
+- Enter email/phone and password
+- Click "Sign In" to return to the landing page as an authenticated user
+- Click "Register" to navigate to the registration page
+
+#### Register Page
+- Access by clicking the "Register" button on the login page
+- Enter email/phone, password, and confirm password
+- Click "Register" to create an account and navigate to the login page
+- "Already have an account?" link returns to the login page
+
+### Private Gallery
+- Access by clicking the "Private" button on the landing page (authentication required)
+- Displays user's private collection of photos
+- Click the "+" icon to add new photos to your private collection
+
+### Add Picture
+- Access by clicking the "+" icon in the private gallery
+- Upload new images to your collection
+- Save your memory with the upload modal
+
+### Donation/Pricing Page
+- Access by clicking the bag icon in the top navigation
+- Set prices for your photos (1$, 10$, 100$)
+- Accept donations from other users
+
+### Authentication Prompt
+- Appears when an unauthenticated user attempts to interact with features requiring authentication
+- Provides options to sign in or register
+
+## Technical Architecture
+
+### Frontend (React)
+- Component-based UI architecture
+- Context-based state management
+- Custom hooks for authentication, gallery, and blockchain interactions
+- Responsive design for various device sizes
+
+### Backend (Internet Computer / Motoko)
+- Secure authentication system
+- Distributed file storage
+- Smart contract integration
+- NFT marketplace functionality
+
+### Blockchain Integration (Ethereum)
+- ERC-721 NFT implementation
+- Marketplace smart contracts
+- Ethereum wallet connection
+- Token-based transactions
+
+## Development Setup
+
+### Prerequisites
+- Node.js and npm
+- Internet Computer SDK (dfx)
+- Ethereum development tools (Truffle/Hardhat)
+- Web3 provider (MetaMask recommended)
+
+### Installation
 ```bash
-git clone https://github.com/yourusername/pom-photo-app.git
-cd pom-photo-app
-```
+# Clone the repository
+git clone https://github.com/your-username/pom-platform.git
+cd pom-platform
 
-### 2. Install dependencies
-
-```bash
+# Install dependencies
 npm install
-```
 
-### 3. Set up environment variables
-
-Create a `.env` file in the root directory:
-
-```
-# Frontend environment variables
-REACT_APP_IC_HOST=http://localhost:8000
-REACT_APP_BACKEND_CANISTER_ID=rrkah-fqaaa-aaaaa-aaaaq-cai
-
-# Ethereum integration environment variables
-INFURA_URL=https://mainnet.infura.io/v3/YOUR_INFURA_KEY
-CONTRACT_ADDRESS=0xYourContractAddress
-```
-
-For the Rust Ethereum integration, create a `.env` file in the `eth-integration` directory:
-
-```
-INFURA_URL=https://mainnet.infura.io/v3/YOUR_INFURA_KEY
-CONTRACT_ADDRESS=0xYourContractAddress
-PRIVATE_KEY=YourPrivateKeyForTesting
-```
-
-### 4. Start the local Internet Computer replica
-
-```bash
-dfx start --background
-```
-
-### 5. Deploy the backend canister
-
-```bash
-dfx deploy backend
-```
-
-### 6. Start the frontend development server
-
-```bash
+# Start the development server
 npm start
+
+# Deploy to Internet Computer
+npm run deploy
 ```
 
-### 7. Start the Ethereum integration service
-
+### Smart Contract Deployment
 ```bash
-cd eth-integration
-cargo run
+# Deploy Ethereum contracts
+cd ethereum
+npx truffle migrate --network rinkeby
 ```
 
-## Main Features
+## Project Structure
+The project follows a modular structure:
+- `/src/frontend`: React application components, pages, and logic
+- `/src/backend`: Motoko canisters for Internet Computer
+- `/ethereum`: Ethereum smart contracts and configuration
+- `/assets`: Static images and resources
 
-- **Photo Gallery**: Browse and view photos
-- **User Authentication**: Register and login functionality
-- **Photo Upload**: Upload and share photos with others
-- **Private Collection**: Manage your personal photo collection
-- **Ethereum Donations**: Support creators with cryptocurrency donations
-
-## Development Workflow
-
-1. Make changes to the React frontend in the `src` directory
-2. Update Motoko backend in the `backend` directory
-3. Deploy backend changes with `dfx deploy backend`
-4. Modify the Ethereum integration in the `eth-integration` directory as needed
-
-## Deployment
-
-### Deploying to the Internet Computer
-
-```bash
-dfx deploy --network ic
-```
-
-### Deploying the Ethereum Integration
-
-The Rust Ethereum integration should be deployed to a server with:
-
-```bash
-cargo build --release
-```
-
-Then run the resulting binary on your server.
-
-## Testing
-
-```bash
-# Test the frontend
-npm test
-
-# Test the backend
-dfx canister call backend test
-
-# Test the Ethereum integration
-cd eth-integration
-cargo test
-```
+## Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
-
-MIT
+[MIT](LICENSE)
