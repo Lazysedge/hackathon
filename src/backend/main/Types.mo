@@ -3,8 +3,8 @@ import Time "mo:base/Time";
 import Nat "mo:base/Nat";
 import Text "mo:base/Text";
 import Bool "mo:base/Bool";
-import Hash "mo:base/Hash";
-import TrieMap "mo:base/TrieMap";
+import _Hash "mo:base/Hash";
+import _TrieMap "mo:base/TrieMap";
 
 module {
   public type User = {
@@ -87,5 +87,5 @@ module {
   
   public type CollectionResult = Result<Collection>;
   
-  ublic type PaymentResult = Result<Payment>;
-}
+  public type PaymentResult = Result<Payment>;
+};
