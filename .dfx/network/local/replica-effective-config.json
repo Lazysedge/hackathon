@@ -1,0 +1,31 @@
+{
+  "replica_rev": "cabe2ae3ca115b1a3f24d75814d4f8e317b2964d",
+  "type": "replica",
+  "config": {
+    "http_handler": {
+      "port": null,
+      "write_port_to": "/Users/athafajriputra/NGODING/hackathon/.dfx/network/local/replica-configuration/replica-1.port"
+    },
+    "state_manager": {
+      "state_root": "/Users/athafajriputra/NGODING/hackathon/.dfx/network/local/state/replicated_state"
+    },
+    "crypto": {
+      "crypto_root": "/Users/athafajriputra/NGODING/hackathon/.dfx/network/local/state/crypto_store"
+    },
+    "artifact_pool": {
+      "consensus_pool_path": "/Users/athafajriputra/NGODING/hackathon/.dfx/network/local/state/consensus_pool"
+    },
+    "subnet_type": "application",
+    "btc_adapter": {
+      "enabled": false,
+      "socket_path": null
+    },
+    "canister_http_adapter": {
+      "enabled": true,
+      "socket_path": "/var/folders/j4/5d6msmqj1rngddb4z4xt8lbc0000gn/T/ic-https-outcalls-adapter-socket.8381.1740899372"
+    },
+    "log_level": "error",
+    "artificial_delay": 600,
+    "use_old_metering": false
+  }
+}
