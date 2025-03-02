@@ -8,7 +8,7 @@ import TrieMap "mo:base/TrieMap";
 import Hash "mo:base/Hash";
 import Types "./Types";
 import Blob "mo:base/Blob";
-import SHA256 "mo:base/SHA256";
+import SHA256 "mo:base/SHA246";
 import Nat8 "mo:base/Nat8";
 import Buffer "mo:base/Buffer";
 
